@@ -1,18 +1,18 @@
 # Knowledge
 Thing to Read or Know in Android
 
-Butter Knife library: To remove findViewById in code
+-Butter Knife library: To remove findViewById in code
 
   in kotlin it's enough to add following code to app gradle:
       androidExtensions{
             experimental = true
                 }
 
-AndroidAnnotation: Open source framework for android development by Java
+-AndroidAnnotation: Open source framework for android development by Java
 
-Retrofit: Library to call webservices
+-Retrofit: Library to call webservices
 
-Add following to build.gradle when you want to use lambda:
+-Add following to build.gradle when you want to use lambda:
 
 compileOptions {
 
@@ -21,3 +21,7 @@ sourceCompatibility JavaVersion.VERSION_1_8
 targetCompatibility JavaVersion.VERSION_1_8
 
 }
+
+-Always create a BaseActivity class that extends AppCompatActivity.
+  then App activities extends this BaseActivity
+  useful for avoid repeatetive code like when you use Hawk
