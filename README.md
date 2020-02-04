@@ -23,8 +23,9 @@ targetCompatibility JavaVersion.VERSION_1_8
 }
 
 -BaseActivity: Always create a BaseActivity class that extends AppCompatActivity.
-  then App activities extends this BaseActivity
-  useful for avoid repeatetive code like when you use Hawk
+  then App activities extends this BaseActivity useful for avoid repeatetive code like when you use Hawk
 
 -BaseApplication: this class extends Application class. this class is called before activities.
+  
+-LeakCanary: A library to detect memory leaks in android
   
