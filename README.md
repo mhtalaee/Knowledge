@@ -22,6 +22,9 @@ targetCompatibility JavaVersion.VERSION_1_8
 
 }
 
--Always create a BaseActivity class that extends AppCompatActivity.
+-BaseActivity: Always create a BaseActivity class that extends AppCompatActivity.
   then App activities extends this BaseActivity
   useful for avoid repeatetive code like when you use Hawk
+
+-BaseApplication: this class extends Application class. this class is called before activities.
+  
