@@ -30,9 +30,9 @@ targetCompatibility JavaVersion.VERSION_1_8
 -LeakCanary: A library to detect memory leaks in android
   
 -Test
-  1. BlackBox Test: by end user
-  2. WhiteBox Test
-      2.1. by developer
-      2.2. Unit Test: just for testing plain java & kotlin codes
-      2.3. TDD (Test Driven Development)
+    1. BlackBox Test: by end user
+    2. WhiteBox Test
+        2.1. by developer
+        2.2. Unit Test: just for testing plain java & kotlin codes
+          2.3. TDD (Test Driven Development)
          
