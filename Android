@@ -31,6 +31,25 @@ targetCompatibility JavaVersion.VERSION_1_8
     1. BlackBox Test: by end user
     2. WhiteBox Test
         2.1. by developer
-        2.2. Unit Test: just for testing plain java & kotlin codes
-          2.3. TDD (Test Driven Development)
+        2.2. Unit Test: just for testing plain java & kotlin codes (using junit library)
+        2.3. Android Test (instrumented test)
+        2.3. TDD (Test Driven Development)
+        
+-Architectures
+      
+      MVC
+        View: Layout
+        Controller: Activity
+        Model: POJO
+       
+         
+       
+        Problem: causes big files
+        
+     
+     MVP
+       View: Activity - just includes android codes and codes that update view
+       Presenter: includes business codes - master-mind of app
+       Model: Data binding (WeService - DataBase - File)
+              
          
