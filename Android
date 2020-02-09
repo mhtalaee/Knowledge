@@ -51,5 +51,33 @@ targetCompatibility JavaVersion.VERSION_1_8
        View: Activity - just includes android codes and codes that update view
        Presenter: includes business codes - master-mind of app
        Model: Data binding (WeService - DataBase - File)
-              
+        
+          View & Model just inform Presenter about what happend and Presenter commands them what to do
+          
+          
+     DI
+        reduce classes dependency
+          without DI, when in class B we have A a = new A, changing class A, causes error in class
+          
+          -Costructor dependency injection: 
+          در این روش کلاس C بعنوان ورودی کلاس B، inject شده
+          class B(val c : C) {
+          }
+          
+          class A {
+          val c = C()
+          val b = B(c)
+          }
+          
+          روش زیر روش DI نیست
+          در این روش کلاس c در کلاس B ایجاد شده
+          class B {
+          val c= C()
+          }
+          
+          class A {
+          val b = B()
+          }
+          
+          
          
