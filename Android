@@ -79,5 +79,11 @@ targetCompatibility JavaVersion.VERSION_1_8
           val b = B()
           }
           
-          
-         
+    
+    پوشه بندی پروژه
+       
+         -base folder: contains baseApplication, baseActivity, baseFragment
+         -features folder (one folder for each useCase)
+         -pojo folder: pojo classes
+         -repository folder: contains DataBase & WebServices related files
+         -utils folder: contains utilities & Constant files
