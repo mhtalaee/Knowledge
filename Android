@@ -61,6 +61,9 @@ targetCompatibility JavaVersion.VERSION_1_8
           
           -Costructor dependency injection: 
           در این روش کلاس C بعنوان ورودی کلاس B، inject شده
+          در این روش وابستگی کمتر می شود ولی باز تا حد زیادی وابستگی وجود دارد مثلا اگر نام کلاس 
+          C
+          تغییر یابد
           class B(val c : C) {
           }
           
