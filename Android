@@ -59,7 +59,7 @@ targetCompatibility JavaVersion.VERSION_1_8
         reduce classes dependency
           without DI, when in class B we have A a = new A, changing class A, causes error in class
           
-          -Costructor dependency injection: 
+        -Costructor dependency injection: 
           در این روش کلاس C بعنوان ورودی کلاس B، inject شده
           در این روش وابستگی کمتر می شود ولی باز تا حد زیادی وابستگی وجود دارد مثلا اگر نام کلاس 
           C
@@ -81,6 +81,14 @@ targetCompatibility JavaVersion.VERSION_1_8
           class A {
           val b = B()
           }
+          
+        
+        -Interface Dependency Injection
+          both classes impelement an interface (usually named Contract interface)
+          one class accept a class that has impelemented interface of other class as input
+          other class new an instance of other one and set itself as input
+        
+          
           
     
     پوشه بندی پروژه
