@@ -240,12 +240,14 @@ class Derived() : Base() {
 	you should use "Object" keyword (instead of "new" keyword in java)
 	
 	btnSave.setOnClickListener(object : View.OnClickListener{
+	    override fun onClick(p0: View?) {
+        	//Do Something
+            }
+        })
 	
-            override fun onClick(p0: View?) {
-        
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        
-	    }
-        
-	})
+	but also you can use following code for simplicity:
+	
+	btnSave.setOnClickListener {
+            //Do Something
+        }
 
