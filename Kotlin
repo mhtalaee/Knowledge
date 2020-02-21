@@ -256,3 +256,11 @@ class Derived() : Base() {
 
 35. Any
 	in kotlin all classes extend "Any" class (like "Object" class in java)
+	
+	
+36. List: get an item
+	
+	Java:     list.get(1)
+	Kotlin:   list[1]
+	
+	
