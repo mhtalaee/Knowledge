@@ -72,6 +72,9 @@ cast is done automatically after comparission
 12. Lambda expression syntax
 
 		val sum = { x: Int, y: Int -> x + y }
+		
+	also Lambda is used wherever you want to implement an Interface with just one method 
+	(like onClickListener interface that just contains one method "OnClick")
 	
 13. ?: (Elvis Operator)
 		
