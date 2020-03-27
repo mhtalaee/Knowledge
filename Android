@@ -128,11 +128,13 @@ targetCompatibility JavaVersion.VERSION_1_8
   R8 works with all of your existing ProGuard rules files.
   
 -OAuth
-OAuth is an authorization method to provide access to resources
+OAuth is an authorization method to provide access to resources, but it is often used for authentication workflows anyway.
 building a web app or a mobile app that talks to an existing OAuth 2.0 API: 
 
-	1. creating an account on the OAuth service’s website (Github OAuth service,...) and register App name, callback URL, ...
+	1. creating an account on the OAuth service’s website and register App name, callback URL, ...
 	
-	2. get both client ID (is public) and client secret (must be kept private) from OAuth website
+	2. get both client ID (is public) and client secret (must be kept private) from OAuth service's website
 	
 	3. get access token from OAuth server using client ID and secret
+	
+
