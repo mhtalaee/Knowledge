@@ -9,7 +9,7 @@
 
 -Retrofit: Library to call webservices
 
--Add following to build.gradle when you want to use lambda:
+-Lambda: Add following to build.gradle when you want to use lambda:
 
 compileOptions {
 
@@ -35,14 +35,33 @@ targetCompatibility JavaVersion.VERSION_1_8
         2.3. Android Test (instrumented test)
         2.3. TDD (Test Driven Development)
         
+-Navigation Editor
+	a navigation graph, which is an XML resource that represents the individual destination nodes within your app along with the actions that connect the nodes
+
+-Picaso
+	ImageView with photo from the internet
+  
+-GitKraken 
+	To compare sources with sources on github
+
+-AutoFillHint 
+	EditText attribute to remeber previously inserted data
+  
+-JavaDecompiler
+	A site for decompile APKs and compiled sources  
+        
+-swipe to refresh
+	On Android, the “swipe to refresh” gesture displays a circular progress indicator to indicate that the UI is being refreshed.
+
+-Memory leak
+		Leak Canary lib (ILikeAndroid.ir)
+    
 -Architectures
       
       MVC
         View: Layout
         Controller: Activity
         Model: POJO
-       
-         
        
         Problem: causes big files
         
@@ -55,7 +74,7 @@ targetCompatibility JavaVersion.VERSION_1_8
           View & Model just inform Presenter about what happend and Presenter commands them what to do
           
           
-     DI
+-DI
         reduce classes dependency
           without DI, when in class B we have A a = new A, changing class A, causes error in class
           
@@ -98,3 +117,11 @@ targetCompatibility JavaVersion.VERSION_1_8
          -pojo folder: pojo classes
          -repository folder: contains DataBase & WebServices related files
          -utils folder: contains utilities & Constant files
+         
+-ProGuard & R8
+  Both are used to Shrink, obfuscate, and optimize your app
+  
+  Code shrinking: detects and safely removes unused classes, fields, methods, and attributes from your app and its library dependencies 
+  Resource shrinking: removes unused resources from your packaged app
+  Obfuscation: shortens the name of classes and members, which results in reduced DEX file sizes
+  Optimization: inspects and rewrites your code to further reduce the size of your app’s DEX files.
