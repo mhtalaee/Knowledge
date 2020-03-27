@@ -105,9 +105,7 @@ targetCompatibility JavaVersion.VERSION_1_8
         -Interface Dependency Injection
           both classes impelement an interface (usually named Contract interface)
           one class accept a class that has impelemented interface as input 
-          other class new an instance of other one and set itself as input
-        
-          
+          other class new an instance of other one and set itself as input       
           
     
     پوشه بندی پروژه
@@ -125,3 +123,7 @@ targetCompatibility JavaVersion.VERSION_1_8
   Resource shrinking: removes unused resources from your packaged app
   Obfuscation: shortens the name of classes and members, which results in reduced DEX file sizes
   Optimization: inspects and rewrites your code to further reduce the size of your app’s DEX files.
+  
+  Both ProGuard and R8 have similar features, with some distinct advantages for ProGuard.
+  R8 works with all of your existing ProGuard rules files.
+  
