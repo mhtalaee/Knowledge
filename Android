@@ -137,4 +137,6 @@ building a web app or a mobile app that talks to an existing OAuth 2.0 API:
 	
 	3. get access token from OAuth server using client ID and secret
 	
-
+some OAuth services: GitHub, Google
+mobile apps cannot maintain the confidentiality of a client secret. Because of this, mobile apps must use an OAuth flow that 
+does not require a client secret.
