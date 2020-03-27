@@ -1,5 +1,14 @@
 -Hawk library: is used instead of Shared Preferences
 
+-TargetSdkVersion 
+   <= 22 : when user installs app, all permissions defined in Manifest file are granted tp app (impossible to upload on Google Play)
+   >= 23 : permissions are granted in runtime
+   always set TargetSdk & CompileSdk to latest version
+   
+-semver (Semantic Versioning): Versioning standards (semver.org)
+	alwayes use 3-digit numbers for versionCode & versionName in build.gradle like:
+		versionCode = 120   versionName = "1.2.0"
+
 -Butter Knife library: To remove findViewById in code
 
   in kotlin it's enough to add following code to app gradle:
