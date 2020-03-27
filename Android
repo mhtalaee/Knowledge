@@ -9,6 +9,8 @@
 	alwayes use 3-digit numbers for versionCode & versionName in build.gradle like:
 		versionCode = 120   versionName = "1.2.0"
 
+-jitpack: a repository for uploading your libraries
+
 -Butter Knife library: To remove findViewById in code
 
   in kotlin it's enough to add following code to app gradle:
