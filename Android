@@ -140,3 +140,4 @@ building a web app or a mobile app that talks to an existing OAuth 2.0 API:
 some OAuth services: GitHub, Google
 mobile apps cannot maintain the confidentiality of a client secret. Because of this, mobile apps must use an OAuth flow that 
 does not require a client secret.
+Some OAuth services provide you with SDKs which handle the authorization process for you.
