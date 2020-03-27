@@ -1,3 +1,5 @@
+-Hawk library: is used instead of Shared Preferences
+
 -Butter Knife library: To remove findViewById in code
 
   in kotlin it's enough to add following code to app gradle:
