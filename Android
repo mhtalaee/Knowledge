@@ -72,12 +72,12 @@ targetCompatibility JavaVersion.VERSION_1_8
        Model: Data binding (WeService - DataBase - File)
         
           View & Model just inform Presenter about what happend and Presenter commands them what to do
-          
+          (https://antonioleiva.com/mvp-android)
           
 -DI
         reduce classes dependency
           without DI, when in class B we have A a = new A, changing class A, causes error in class
-          
+          (http://www.javacreed.com/why-should-we-use-dependency-injection)
         -Costructor dependency injection: 
           در این روش کلاس C بعنوان ورودی کلاس B، inject شده
           در این روش وابستگی کمتر می شود ولی باز تا حد زیادی وابستگی وجود دارد مثلا اگر نام کلاس 
