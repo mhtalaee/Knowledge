@@ -127,7 +127,7 @@ targetCompatibility JavaVersion.VERSION_1_8
   Both ProGuard and R8 have similar features, with some distinct advantages for ProGuard.
   R8 works with all of your existing ProGuard rules files.
   
--OAuth
+-OAuth (https://www.oauth.com)
 OAuth is an authorization method to provide access to resources, but it is often used for authentication workflows anyway.
 building a web app or a mobile app that talks to an existing OAuth 2.0 API: 
 
