@@ -85,7 +85,7 @@ targetCompatibility JavaVersion.VERSION_1_8
         
         -Interface Dependency Injection
           both classes impelement an interface (usually named Contract interface)
-          one class accept a class that has impelemented interface of other class as input
+          one class accept a class that has impelemented interface as input 
           other class new an instance of other one and set itself as input
         
           
