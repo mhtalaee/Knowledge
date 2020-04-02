@@ -187,4 +187,9 @@ Google provides an open source library called "AppAuth" and you can work manu OA
 -Best practices to makes your code base more robust, testable, and maintainable:
 	https://developer.android.com/jetpack/docs/guide#best-practices
 	
+-Best practices for lifecycle-aware components
+	https://developer.android.com/topic/libraries/architecture/lifecycle#lc-bp
+	
+
+-Kotlin coroutines: to manage long-running tasks and other operations that can run asynchronously.
 
