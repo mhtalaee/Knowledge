@@ -161,3 +161,9 @@ Google provides an open source library called "AppAuth" and you can work manu OA
 -Reactive Programming
 	
 -RxJava Operators
+
+-Architecture Components: Collection of libraries that help you design robust, testable, and maintainable apps
+	includes:
+		-LiveDate
+		-ViewModel
+		-Room
