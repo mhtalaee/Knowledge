@@ -167,3 +167,16 @@ Google provides an open source library called "AppAuth" and you can work manu OA
 		-LiveDate
 		-ViewModel
 		-Room
+		
+- Common architectural principles
+	1. Separation of concerns :
+		It's a common mistake to write all your code in an Activity or a Fragment. These UI-based classes should only contain logic that 
+		handles UI and os interactions. By keeping these classes as lean as possible, you can avoid many lifecycle-related problems.
+	
+	2. Drive UI from a model
+		 Models are components that are responsible for handling the data for an app. They're independent from the View objects and 
+		 app components in your app, so they're unaffected by the app's lifecycle and the associated concerns.
+
+	Recommended app architecture:
+	https://developer.android.com/topic/libraries/architecture/images/final-architecture.png
+	
