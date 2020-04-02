@@ -263,4 +263,15 @@ class Derived() : Base() {
 	Java:     list.get(1)
 	Kotlin:   list[1]
 	
+37. ?
+	If you have a variable which can be null : 
+	var person: Person?
+	To access properties and methods of the person variable:
+	var name = person?.name
+
+38. !! (not-null-assertion): if you are really sure that the variable can never be null
+39. ! (to show platform type): when accessing code from null-unsafe platforms like Java
+
+	
+	
 	
