@@ -94,22 +94,49 @@ cast is done automatically after comparission
 		"Convert this to camelcase".spaceToCamelCase()
 	
 17. Creating a singleton
+If you need a singleton - a class that only has got one instance - you can declare the class in the usual way, 
+	but use the object keyword instead of class
 		
-		object Resource {
-		  val name = "Name"
+		object CarFactory {
+    			val cars = mutableListOf<Car>()
+    
+    			fun makeCar(horsepowers: Int): Car {
+      				val car = Car(horsepowers)
+       				cars.add(car)
+        			return car
+   			 }
 		}
 		
-this is equal to "public static final" in Java
 		
-		object Consts {
-	          val BASE_URL = "http://ap...."
-		}
-all variables in "object" will be Constants
-but for define constant in a class (not object) use companion object:
+-Companion object		
+If you need a function or a property to be tied to a class rather than to instances of it, you can declare it inside a companion object:
 
-		companion object {
-		   val BASE_URL = "http://ap...."
+		class Car(val horsepowers: Int) {
+   			
+			companion object Factory {
+      			 	 val cars = mutableListOf<Car>()
+
+     			  	fun makeCar(horsepowers: Int): Car {
+        		  	  val car = Car(horsepowers)
+         		  	  cars.add(car)
+          		 	  return car
+       				}
+			}
 		}
+
+If you want to create the local constants which are supposed to be used with in the class use "val": val MY_CONSTANT = "Constants"
+
+If you want to create a public constant in kotlin like public static final in java, you can create it as follow:
+   
+  	 companion object{
+
+  	    const val MY_CONSTANT = "Constants"
+
+	}
+
+The companion object is a singleton, and its members can be accessed directly via the name of the containing class
+
+
 		
 18.Get first item of a possibly empty collection
 
