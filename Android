@@ -221,6 +221,7 @@ Google provides an open source library called "AppAuth" and you can work manu OA
 		Completable: is used when the Observable has to do some task without emitting a value
 		
 -Room
+
 	Room provides the following support for return values of RxJava2 types:
 		
 		@Query methods: Room supports return values of type Flowable and Observable.
