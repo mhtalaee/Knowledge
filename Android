@@ -197,3 +197,33 @@ Google provides an open source library called "AppAuth" and you can work manu OA
 -Sunflower: a gardening app illustrating Android development best practices with Android Jetpack.
 	https://github.com/android/sunflower
 
+-RxJava
+
+	Observable: emits some values
+	
+	Operator: operates(modifies) the emitted value by Observable
+	
+	Observer: receives those values emitted by Observable and modified by Operator
+	
+	Types of Observables:
+		
+		Observable: emits more than one value.
+			usecase: If the user wants to download a file from the internet, he should be provided with the progress of 
+			the download. In this case, the Observable has to emit values at regular intervals. In this case, we can use 
+			this Observable
+		
+		Flowable: similar to Observable with BackPressure strategy
+		
+		Single: emit only one value like a response from network call. 
+		
+		Maybe: is used when the observable has to emit a value or no value. It is not recommended much to use in Android Application Development.
+		
+		Completable: is used when the Observable has to do some task without emitting a value
+		
+-Room
+	Room provides the following support for return values of RxJava2 types:
+		
+		@Query methods: Room supports return values of type Flowable and Observable.
+		
+		@Insert, @Update, @Delete methods: Room 2.1.0 and higher supports return values of type Completable, Single<T>, and Maybe<T>.
+		
