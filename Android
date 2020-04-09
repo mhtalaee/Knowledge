@@ -252,3 +252,13 @@ Google provides an open source library called "AppAuth" and you can work manu OA
 
 		@Query can be used with Maybe and Single return types but If the row is updated, nothing happens.
 		
+		
+		SQLite and Room don't have date data type, we should convert date to String (or Long) to store them in database.
+		Because of that we define a Converter class and to introduce this class to Room we use @TypeConverters annotation in RoomDatabase class.
+		
+	-ThreeTenABP:  from Java8, old java.util.Date and java.util.Calendar packages replaced with new java.time package.
+				   This new package attempts to improve old one by providing increased performance and ease of use.
+				   Java8 java.time is also called  JSR310 or ThreeTen.
+				   In android ThreeTen is just usable with API >= 26 and we have problem when using minSDK < 26
+				   By ThreeTenABP library (written by JakeWharton) we can use ThreeTen when minSDK is < 26
+	
