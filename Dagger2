@@ -1,1 +1,120 @@
-Dagger2
+Dagger2 Annotations:
+@Inject
+@Provides
+@Module
+@Component
+@Singleton 
+
+--------------------------------------------------------@Inject Annotation------------------------------------------------------------
+
+@Inject Annotation:
+
+Dagger creates instances of your application classes and satisfies their dependencies. 
+It uses the @Inject (javax.inject.Inject annotation) to identify which constructors and fields it is interested in.
+
+--constructor example:
+
+class Thermosiphon implements Pump {
+  private final Heater heater;
+
+  @Inject
+  Thermosiphon(Heater heater) {
+    this.heater = heater;
+  }
+
+  ...
+}
+
+--field example:
+
+class CoffeeMaker {
+  @Inject Heater heater;
+  @Inject Pump pump;
+
+  ...
+}
+
+--------------------------------------------------------@Provides Annotation------------------------------------------------------------
+
+@Provides Annotation:
+
+@Inject doesn’t work everywhere:
+
+ -Interfaces can’t be constructed.
+ 
+ -Third-party classes can’t be annotated.
+ 
+ -Configurable objects must be configured!
+ 
+
+use an @Provides-annotated method. The method’s return type defines which dependency it satisfies.
+For example, provideHeater() is invoked whenever a Heater is required:
+
+@Provides static Heater provideHeater() {
+  return new ElectricHeater();
+}
+
+--It’s possible for @Provides methods to have dependencies of their own:
+
+@Provides static Pump providePump(Thermosiphon pump) {
+  return pump;
+}
+
+--------------------------------------------------------@Module Annotation------------------------------------------------------------
+
+All @Provides methods must belong to a module (classes that have an @Module annotation)
+
+@Module
+class DripCoffeeModule {
+  @Provides static Heater provideHeater() {
+    return new ElectricHeater();
+  }
+
+  @Provides static Pump providePump(Thermosiphon pump) {
+    return pump;
+  }
+}
+
+--------------------------------------------------------@Component Annotation------------------------------------------------------------
+
+@Component
+
+The @Inject and @Provides form a graph of objects.
+Android Application base class should accesses that graph.
+In Dagger2 this graph of objects is accessible via an @Component-annotated interface which has methods that have no arguments 
+and return the desired type  and passing the module types to the modules parameter.
+Dagger 2 then fully generates an implementation of that contract.
+
+@Component(modules = DripCoffeeModule.class)
+interface CoffeeShop {
+  CoffeeMaker maker();
+}
+
+The implementation of this Interface has same name as the interface prefixed with Dagger (DaggerCoffeeShop).
+Obtain an instance by invoking the following method on that implementation.
+
+create method: When all dependencies can be constructed without the needing user to create any dependency instance:
+
+	CoffeeShop coffeeShop = DaggerCoffeeShop.create();
+
+builder method: When it's needed that user dependency instance
+
+	CoffeeShop coffeeShop = DaggerCoffeeShop.builder()
+							.dripCoffeeModule(new DripCoffeeModule())
+							.build();
+
+--------------------------------------------------------@Singleton Annotation------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
