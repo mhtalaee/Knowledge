@@ -126,3 +126,24 @@
      
      2.unchecked exception: 
      are checked at run time (subclass of RunTime Exception) and doesn't have to be caught or thrown or anything (like NoSuchElementException and NullPointerException)
+
+
+8. Singleton
+	a Singleton is just a normal class that makes sure that only one instance of it exists at any point in time.
+	Constructor of class is private so other classes can not create instance of this class.
+	They can get same instance by calling getInstance method.
+	
+	public class Sample {
+	
+		private static Sample instance = null;
+	
+		private Sample() { // constructor logic }
+
+		public static Sample getInstance() {
+			if (instance == null) {
+				Sample.instance = new Sample();
+			}
+			return Sample.instance;    
+		}
+
+   }
