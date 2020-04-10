@@ -105,13 +105,36 @@ builder method: When it's needed that user dependency instance
 
 --------------------------------------------------------@Singleton Annotation------------------------------------------------------------
 
+@Singleton
+Annotate an @Provides method or injectable class (class containing @Inject fields) with @Singleton. The graph will use a single instance of the value for all of its clients.
+
+@Provides @Singleton static Heater provideHeater() {
+  return new ElectricHeater();
+}
+
+@Singleton
+class CoffeeMaker {
+  ...
+}
 
 
+To declare that a component is associated with a given scope, simply apply the scope annotation to the component interface:
 
+@Component(modules = DripCoffeeModule.class)
+@Singleton
+interface CoffeeShop {
+  CoffeeMaker maker();
+}
 
+--------------------------------------------------------Dagger 2 specifications------------------------------------------------------------
 
+--Compile-time Validation
+The Dagger annotation processor is strict and will cause a compiler error if any bindings are invalid or incomplete
 
-
+--Compile-time Code Generation
+Dagger’s annotation processor generates source files with names like CoffeeMaker_Factory.java or CoffeeMaker_MembersInjector.java. 
+These files are Dagger implementation details. You shouldn’t need to use them directly. 
+The only generated types you should refer to in your code are the ones Prefixed with Dagger for your component like DaggerAppComponent.
 
 
 
