@@ -1,0 +1,4 @@
+1. DataRepository class is equal to Model in MVVM
+2. DataRepository is shared among all ViewModels
+3. subscribeOn & observeOn methods (for providing schedulers) are used in DataRepository class
+4. subscribe is called inn ViewModels when calling DataRepository methods
