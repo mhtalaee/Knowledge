@@ -143,6 +143,14 @@ interface CoffeeShop {
   CoffeeMaker maker();
 }
 
+--------------------------------------------------------@Named Annotation------------------------------------------------------------
+
+@Named
+For example when we need a string value as a input parameter, we use this annotation.
+when creating a database, you need a database name, you can use this annotation:
+
+@Provides @Named("name")
+String provideDatabaseName();
 --------------------------------------------------------Dagger 2 specifications------------------------------------------------------------
 
 --Compile-time Validation
