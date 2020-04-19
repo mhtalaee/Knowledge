@@ -40,13 +40,15 @@ class CoffeeMaker {
   ...
 }
 
+Field injection should only be used in Android framework classes (where constructor injection cannot be used)
+
 --------------------------------------------------------@Provides Annotation------------------------------------------------------------
 
 @Provides Annotation:
 
 @Inject doesn’t work everywhere:
 
- -Interfaces can’t be constructed.
+ -Interfaces can’t be constructed (For implementation of interfaces, the best practice is using @Binds)
  
  -Third-party classes can’t be annotated.
  
@@ -118,6 +120,17 @@ builder method: When it's needed that user dependency instance
 	CoffeeShop coffeeShop = DaggerCoffeeShop.builder()
 							.dripCoffeeModule(new DripCoffeeModule())
 							.build();
+							
+
+@Component
+interface ApplicationComponent {
+    
+    fun inject(activity: LoginActivity)
+}
+
+The Inject function tells Dagger that LoginActivity requests injection so the graph needs to satisfy all the dependencies of the fields 
+that LoginActivity is requesting.
+This functions can have any name, but calling them inject() when they receive the object to inject as a parameter is a convention in Dagger.
 
 --------------------------------------------------------@Singleton Annotation------------------------------------------------------------
 
@@ -164,6 +177,73 @@ The only generated types you should refer to in your code are the ones Prefixed 
 --------------------------------------------------------@BindsInstance Annotation------------------------------------------------------------
 
 You could use @BindsInstance and manually define your own @Component.Builder to do the exact same thing as @Provides and @Module annotations do.
+
+--------------------------------------------------------@Binds Annotation------------------------------------------------------------
+
+@Binds is similar to @Provides annotation, but the way to use it is different:
+
+1. Method annotated with @Binds is abstract (so class containing this method is abstract too), but method annotated with @Provides has implementation.
+
+2. Method annotated with @Binds must have only one parameter whose type is assignable to the return type.
+
+@Binds annotation benefit: 
+@Binds generates less files and codes that cause into less size Dex file and App.
+@Binds cause into reduce object creation flow
+
+For creating an object by a method annotated with @Provides: Dagger starts with Component class -> Module Factory class -> Module class
+For creating an object by a method annotated with @Binds: Dagger only use Component class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
