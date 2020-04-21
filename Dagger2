@@ -31,7 +31,10 @@ class Thermosiphon implements Pump {
   ...
 }
 
---field example:
+Because certain Android framework classes such as activities and fragments are instantiated by the system, Dagger can't create them for you.
+Then you cannot use the @Inject annotation in the constructor of the class (constructor injection). Instead, you have to use field injection.
+
+--field Injection example:
 
 class CoffeeMaker {
   @Inject Heater heater;
@@ -52,7 +55,7 @@ Field injection should only be used in Android framework classes (where construc
  
  -Third-party classes can’t be annotated.
  
- -Configurable objects must be configured!
+ -Configurable objects must be configured (Like creating Room database intance that is created by: Room.databaseBuilder(...).build
  
 
 For example, our dagger wants to create an instance of a class, but class isn't our so we can’t use @inject for this class constructor,
@@ -108,8 +111,25 @@ interface CoffeeShop {
   CoffeeMaker maker();
 }
 
+--If using @Inject in Constructor Injection, by writing a function in Component interface and specify a return type, we tell dagger that it must create 
+codes to return such return type (like above maker() function).
+
 The implementation of this Interface has same name as the interface prefixed with Dagger (DaggerCoffeeShop).
 Obtain an instance by invoking the following method on that implementation.
+
+--If using @Inject in field injection, by writing an Inject function with a type as input parameter, we tell dagger that it must saticfy dependencies 
+in that input type. Example:
+
+@Component
+interface ApplicationComponent {
+    fun inject(activity: LoginActivity)
+}
+
+Above inject function tells Dagger that LoginActivity requests injection so the graph needs to satisfy all the dependencies of the fields in
+LoginActivity. Then in Activit (Fragment, ...) onCreate, we instantiate fields this way: 
+appComponent.inject(this) 
+//appComponent = our created DaggerAppComponent instance
+
 
 create method: When all dependencies can be constructed without the needing user to create any dependency instance:
 
@@ -133,6 +153,7 @@ that LoginActivity is requesting.
 This functions can have any name, but calling them inject() when they receive the object to inject as a parameter is a convention in Dagger.
 
 --------------------------------------------------------@Singleton Annotation------------------------------------------------------------
+Scopes is a way to have a unique instance of a type in a component (scoping a type to the component's lifecycle).
 
 @Singleton
 Annotate an @Provides method or injectable class (class containing @Inject fields) with @Singleton. The graph will use a single instance 
@@ -155,6 +176,8 @@ To declare that a component is associated with a given scope, simply apply the s
 interface CoffeeShop {
   CoffeeMaker maker();
 }
+
+ @Singleton comes with the Dagger library,  but you can create a custom one with a different name 
 
 --------------------------------------------------------@Named Annotation------------------------------------------------------------
 
