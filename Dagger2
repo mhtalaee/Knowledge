@@ -216,16 +216,52 @@ You could use @BindsInstance and manually define your own @Component.Builder to 
 For creating an object by a method annotated with @Provides: Dagger starts with Component class -> Module Factory class -> Module class
 For creating an object by a method annotated with @Binds: Dagger only use Component class
 
+--------------------------------------------------------@Subcomponent Annotation------------------------------------------------------------
 
+Scope : means limiting lifecycle of a class to lifecycle of another one (@Singleton is an annotation for scoping)
 
+@Singleton
+@Component(modules = [NetworkModule::class])
+interface ApplicationComponent {
+    
+}
 
+Above code creates a component that it's lifecycle is limited to Application class (if DaggerAppComponent is created in application onCreate)
+To have a component with lifecycle different from above component but able to use above component graph, we use a SubComponent
 
+@Subcomponent
+interface LoginComponent {
 
+	@Subcomponent.Factory
+		interface Factory {
+			fun create(): LoginComponent
+		}
+}
 
+subcomponent factory inside LoginComponent tells main Component how to create instances of LoginComponent.
 
+To tell Dagger that LoginComponent (our SubComponent) is a subcomponent of ApplicationComponent (our application component):
 
+1.	Creating a new Dagger module passing the subcomponent's class to the subcomponents attribute of the annotation:
 
+@Module(subcomponents = LoginComponent::class)
+class SubcomponentsModule {}
 
+2.	Adding the new module to ApplicationComponent
+
+@Singleton
+@Component(modules = [SubcomponentsModule::class])
+interface ApplicationComponent {
+}
+
+3.	Because consumers of ApplicationComponent (our application component) need to know how to create instances of LoginComponent,
+create a method in ApplicationComponent to provide subcomponent:
+
+@Singleton
+@Component(modules = [SubcomponentsModule::class])
+interface ApplicationComponent {
+	fun loginComponent(): LoginComponent.Factory
+}
 
 
 
