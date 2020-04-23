@@ -1,4 +1,15 @@
+Methods for decoupling of classes:
+
+A. Dependency Injection (DI):
+	1. Manual DI
+	2. Using DI libraris : Dagger - Guice
+	
+B. Service Locator design pattern
+
+The best method is Dagger because Dagger is built to scale and well suited for building complex apps.
+
 Dagger is a dependency injection framework, which makes it easier to manage the dependencies between the classes in our app.
+Dagger provides dependencies at compile-time (Guice di library is reflection-based and works at run-time)
 
 Dagger1 was reflection-based, Dagger2 is based on annotation processing, so it does the magic at compile time.
 
@@ -263,12 +274,52 @@ interface ApplicationComponent {
 	fun loginComponent(): LoginComponent.Factory
 }
 
+If we create this subcomponent in an activity's onCreate() method, then lifecycle of subcomponent will be as long as Activity lifecycle.
+
+class LoginActivity: Activity() {
+	    lateinit var loginComponent: LoginComponent
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+		loginComponent = (applicationContext as MyDaggerApplication).appComponent.loginComponent().create()
+
+	}
+}
+
+If we use @Singleton scope for on of classes in our SubComponent graph, lifecycle of this class will be as long as main component because our main 
+component has @Singleton annotation (as long as app lifecycle). To limit lifecycle of a subcomponent graph class, we should define a new scope
+annotation (other than @Singleton):
+
+// Definition of a custom scope called ActivityScope
+@Scope
+@Retention(value = AnnotationRetention.RUNTIME)
+annotation class ActivityScope
+
+//Annotate SubComponent with custom scope
+@ActivityScope
+@Subcomponent
+interface LoginComponent { ... }
+
+Then by annotating a classes with @ActivityScope, this class will have an unique instance with lifecycle of SubComponent (equal to Activity lifecycle)
+
+// A unique instance of LoginViewModel is provided in Components annotated with @ActivityScope
+@ActivityScope
+class LoginViewModel @Inject constructor(private val userRepository: UserRepository) {
+	...
+}
+
+--------------------------------------------------------Best practices------------------------------------------------------------
+
+1. When you create a component, you should consider what element is responsible for the lifetime of that component. 
+In above example, the application class was in charge of ApplicationComponent and LoginActivity in charge of LoginComponent.
+
+2. Use scoping only when it makes sense. Overusing scoping can have a negative effect on your app's runtime performance: 
+	the object is in memory as long as the component is in memory and getting a scoped object is more expensive. When Dagger provides the object, 
+	it uses DoubleCheck locking instead of a factory-type provider.
 
 
-
-
-
-
+Reference: 
+	Dagger Basics: https://developer.android.com/training/dependency-injection/dagger-basics
+	Dagger in Android apps: https://developer.android.com/training/dependency-injection/dagger-android
 
 
 
