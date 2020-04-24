@@ -1,0 +1,167 @@
+Since we don’t have any control over Android framework classes (Activity, Fragment, ...), we have to use member (field) injection 
+which cause to boilerplate:
+
+@Component
+interface AppComponent {
+    fun inject(mainActivity: MainActivity)
+}
+
+class MainActivity : AppCompatActivity() {
+
+    @Inject lateinit var someObject: SomeObject
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        DaggerAppComponent.builder().application(this).build().inject(this)  <-- call inject function to initialize @Inject-annotated dependencies
+    }
+}
+
+In addition to lots of boilerplate codes, this breaks a core principle of dependency injection: 
+a class shouldn’t know anything about how it is injected.
+
+To solve these problem and some others, we use Dagger Android. 
+The general idea is to perform member (field) injection of the Android framework classes: 
+Activities, Fragments, BroadcastReceivers, Services and ContentProviders
+
+To do this, We have to create different injectors (AndroidInjector.Factory) for our activities, fragments, etc.
+This injector will perform the injection of the objects. We then put them in a map so whenever we need to inject our objects into an activity/fragment 
+we can retrieve the injector of that activity/fragment from that map to perform the injection.
+
+
+1.	Add AndroidInjectionModule (an internal module created by Dagger) to main application component.
+This module includes binding activity, fragment, service, broadcastReciver and content provider.
+(Because of adding AndroidInjectionModule, We don't need inject(mainActivity: MainActivity) in our component)
+
+2.	Define function inject(app: BaseApplication) to inject the BaseApplication instance to the component.
+	BaseApplication is our app starter class defined in Manifest and extends Android Application class.
+	
+3.	Build a Builder with @Component.Builder that uses
+		(a) bindsInstance to bind an instance of the BaseApplication. This allows to use the BaseApplication instance in defined Dagger Components
+		(b) returns an AppComponent that you will be available to use once the AppComponent is build (more about this later)
+
+This is resulted component:
+
+@Component(modules = [AndroidInjectionModule::class])
+interface AppComponent {
+    fun inject(app: BaseApplication)
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(app: BaseApplication): Builder
+        fun build(): AppComponent
+    }
+}
+
+
+4.	Implement HasAndroidInjector in BaseApplication (for injecting Activites. for Fragments the approach is pretty similar) 
+
+class BaseApplication : Application(), HasActivityInjector {
+	
+	@Inject lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+	
+	override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+	
+}
+
+By DispatchingAndroidInjector<Activity>, rather than having to write our own activity injector, we can use DispatchingAndroidInjector<Activity> 
+which already implements all the logic needed to find our activity injectors.
+
+5.	Create subComponent for activities (for example MainActivity), this way:
+	
+	A.	Create a SubComponent that implements AndroidInjector<MainActivity>
+	
+		@Subcomponent
+		interface MainActivitySubcomponent: AndroidInjector<MainActivity> {
+			@Subcomponent.Builder
+			abstract class Builder: AndroidInjector.Builder<MainActivity>()
+		}
+
+	B.	Create a module for this subComponent. Here we are adding our activity injector into the injectors map.
+		 Key is the class where we will perform the injection
+		 Value is the AndroidInjector.Factory
+		 
+		@Module(subcomponents = [MainActivitySubcomponent::class])
+		abstract class MainActivityModule {
+			@Binds
+			@IntoMap
+			@ClassKey(MainActivity::class)
+			internal abstract fun bindMainActivityInjectorFactory(builder: MainActivitySubcomponent.Builder): AndroidInjector.Factory<*>
+		}
+	
+	C. Connect SubComponent to Main Component
+	
+		@Component(modules = [AndroidInjectionModule::class, MainActivityModule::class])
+		interface AppComponent {
+			fun inject(application: MyApplication)
+		}
+		
+6.	Now we can remove all the boilerplate from our MainActivity and simply have the following code:
+
+class MainActivity : AppCompatActivity() {
+
+    @Inject lateinit var someObject: SomeObject
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        AndroidInjection.inject(this) <-- This line added
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+    }
+}		
+
+These method is according to dagger-android documentation. 
+Our main goal was to remove boilerplate from our activities but we have in fact introduced more code!
+
+The reason is because we need extra subcomponents and extra modules that we didn’t need before. 
+We have deleted some boilerplate code in the activities but introduced a bit more in other places.
+
+Remove some boilerplates:
+
+1. In BaseApplication, extend from DaggerApplication and implement applicationInjector() function.
+	(rather than having to implement activityInjector() and inject DispatchAndroidInjector)
+
+	class BaseApplication : DaggerApplication() {
+	
+	    override fun applicationInjector() = DaggerAppComponent.builder().application(this).build()
+	
+	}
+
+2.	Change our AppComponent to extend from AndroidInjector<BaseApplication>
+
+3.	If subcomponent and its builder have no other methods or supertypes than the ones we’ve used before 
+	we can use @ContributesAndroidInjector to let dagger-android generate that code automatically for us
+	
+	@Module
+	abstract class ActivityBindingModule {
+    
+	@ContributesAndroidInjector
+    abstract fun mainActivity(): MainActivity
+
+}
+
+This module binds all your feature modules and Android framework classes in a single place
+
+4.	Finally change activities to extend from DaggerAppCompatActivity letting us remove AndroidInjection.inject(this).
+
+	class MainActivity : DaggerAppCompatActivity() {
+
+    @Inject lateinit var someObject: SomeObject
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+    }
+}
+
+
+References:
+		https://proandroiddev.com/using-dagger-android-in-a-multi-module-project-e751afaa53ba
+		https://github.com/marcosholgado/dagger-playground/commit/7cd13ac8e403551771282b0aa7f554d885e23bd5
+
+
