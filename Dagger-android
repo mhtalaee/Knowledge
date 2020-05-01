@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-In addition to lots of boilerplate codes, this breaks a core principle of dependency injection: 
+By this way, In addition to lots of boilerplate codes, this breaks a core principle of dependency injection: 
 a class shouldn’t know anything about how it is injected.
 
 To solve these problem and some others, we use Dagger Android. 
@@ -109,6 +109,9 @@ class MainActivity : AppCompatActivity() {
         AndroidInjection.inject(this) <-- This line added
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+		
+		//DaggerAppComponent.builder().application(this).build().inject(this) //This line is removed
+
 
     }
 }		
@@ -153,6 +156,7 @@ This module binds all your feature modules and Android framework classes in a si
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        //AndroidInjection.inject(this) <-- This line removed
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
